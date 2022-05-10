@@ -1,0 +1,107 @@
+* {
+    --nav-bg-color: #272727;
+    --text-color: #f7f7f7;
+    --border-color: #0000004f;
+    --focus-color: #087aec;
+    --title-font-size: 1.2rem;
+    --title-font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    --btn-bg-color: #272727;
+    --error-bg-color: #ff000076;
+    --success-bg-color: #80cb1770;
+}
+
+.btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: var(--btn-bg-color);
+    color: var(--text-color);
+    border-radius: 4px;
+    border: none;
+}
+
+.btn:hover {
+    filter: brightness(60%);
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    padding: 20px;
+    background-color: var(--nav-bg-color);
+    color: var(--text-color)
+}
+
+.nav__account {
+    display: flex;
+    gap: 10px;
+}
+
+.app__alert {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+    border: 2px solid var(--border-color);
+}
+
+.alert--red {
+    background-color: var(--error-bg-color);
+}
+
+.alert--green {
+    background-color: var(--success-bg-color);
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: calc(100vh - 76px);
+    width: 100%;
+    padding: 20px;
+}
+
+.content__form {
+    width: 100%;
+    max-width: 600px;
+}
+
+.content__form fieldset {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    border: 2px solid var(--border-color);
+    border-radius: 4px;
+}
+
+.content__form fieldset legend {
+    text-transform: uppercase;
+    font-size: var(--title-font-size);
+    font-weight: var(--title-font-weight);
+}
+
+.content__form fieldset section {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.content__form fieldset section input {
+    padding: 10px 10px 0 0;
+    border: none;
+    border-bottom: 2px solid var(--border-color);
+    width: 100%;
+}
+
+.content__form fieldset section input:focus {
+    outline: none;
+    border-color: var(--focus-color);
+}

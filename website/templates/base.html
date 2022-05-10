@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bod-Trac: {% block title %}{% endblock %}</title>
+
+    <!-- bod-trac stylesheets -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='stylesheets/reset.css') }}"
+    />
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='stylesheets/index.css') }}"
+    />
+
+    <!-- bod-trac javascript -->
+    <script
+      type="text/javascript"
+      src="{{ url_for('static', filename='script/index.js') }}"
+      defer
+    ></script>
+
+    <!-- Font Awesome Icons -->
+    <script
+      src="https://kit.fontawesome.com/d781852125.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <nav class="nav">
+      <a href="/">
+        <h1 class="nav__logo">
+          Bod-Trac <i class="fa-solid fa-weight-scale"></i>
+        </h1>
+      </a>
+
+      <div class="nav__account">
+        <a href="/auth/login" class="nav__btn">Login</a>
+        <hr />
+        <a href="/auth/signup" class="nav__btn">Signup</a>
+      </div>
+    </nav>
+    {% with messages = get_flashed_messages(with_categories=true) %} {% if
+    messages %} {% for category, message in messages %} {% if category ==
+    'error' %}
+    <div class="app__alert alert--red" id="validation-alert">
+      <p>{{ message }}</p>
+    </div>
+    {% else %}
+    <div class="app__alert alert--green" id="validation-alert">
+      <p>{{ message }}</p>
+    </div>
+    {% endif %} {% endfor %} {% endif %} {% endwith %} {% block content %} {%
+    endblock %}
+  </body>
+</html>
