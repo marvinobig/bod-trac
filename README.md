@@ -20,13 +20,6 @@ Track your body weight & BMI across time so you can keep track of your progress.
 - JavaScript
 - Chart JS
 
-## Installation
-First download project from Github by going over to the green 'code' button and downloading the zip file. Once downloaded, extract the folder.
-
-Then head over to [the python website](https://www.python.org/downloads/) to download the latest version of python.
-
-Once that's done, you can check that it was successful by opening your terminal:
-
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
