@@ -1,9 +1,10 @@
 import sqlite3
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
+from os import path
 
 db = SQLAlchemy()
-DB_NAME = 'bod-trac'
+DB_NAME = 'bod-trac.db'
 
 
 def page_not_found(e):
@@ -23,5 +24,14 @@ def create_app():
     app.register_blueprint(auth, url_prefix='/auth')
     app.register_error_handler(404, page_not_found)
     
+    from .models import User, BodyWeight
+
+    create_database(app)
 
     return app
+    
+
+def create_database(app):
+    if not path.exists('website/' + DB_NAME):
+        db.create_all(app=app)
+        print('Database Created!')
