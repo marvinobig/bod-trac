@@ -6,6 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bod-Trac: {% block title %}{% endblock %}</title>
 
+    <!-- manifest -->
+    <link
+      rel="manifest"
+      href="{{ url_for('static', filename='site.webmanifest') }}"
+    />
+
+    <!-- favicon -->
+    <link
+      rel="shortcut icon"
+      href="{{ url_for('static', filename='favicon/favicon.ico') }}"
+      type="image/x-icon"
+    />
+
     <!-- bod-trac stylesheets -->
     <link
       rel="stylesheet"
