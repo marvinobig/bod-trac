@@ -1,2 +1,82 @@
-{% extends "base.html" %} {% block title %} User {% endblock %} {% block content
-%} {% endblock %}
+{% extends "base.html" %} {% block title %} {{ currentUser.username }} {%
+endblock %} {% block content %}
+<main class="account">
+  <section class="account__actions">
+    <div class="account__actions__weightInput">
+      <form action="/add" method="post">
+        <label for="currentWeight">Update Weight</label>
+        <input type="number" name="currentWeight" id="currentWeight" />
+        <button class="btn" type="submit">Add</button>
+      </form>
+    </div>
+    <div class="account__actions__updateStartingWeight">
+      <form action="/updateStartingBw" method="post">
+        <label for="startingBw">Update Starting BW</label>
+        <input type="number" name="startingBw" id="startingBw" /><button
+          class="btn"
+          type="submit"
+        >
+          Update
+        </button>
+      </form>
+    </div>
+  </section>
+  <section class="account__display">
+    <div class="account__display__chart">
+      <canvas id="bwChart"></canvas>
+      <script>
+        const labels = {{ label | safe }};
+        const bodyweights = {{ weight | safe }};
+
+        const data = {
+          labels: labels,
+          datasets: [
+            {
+              label: "Bodyweight",
+              fill: false,
+              tension: 0.2,
+              backgroundColor: "#0000004f",
+              borderColor: "#272727",
+              beginAtZero: true,
+              data: bodyweights,
+            },
+          ],
+        };
+
+        const config = {
+          type: "line",
+          data: data,
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          },
+        };
+
+        const myChart = new Chart(document.getElementById("bwChart"), config);
+      </script>
+    </div>
+    <div class="account__display__entries">
+      <div class="account__display__entries__card">
+        <p>
+          Starting Bodyweight: {{ currentUser.startingBw | round(method='ceil')
+          }} KG
+        </p>
+      </div>
+      <div class="account__display__entries__bwListCardContainer">
+        {% for recordedBw in currentUser.recordedBws %}
+        <div class="account__display__entries__bwListCardContainer__card">
+          <p>{{ recordedBw.bW | round(method='ceil') }} KG</p>
+          <p>{{ recordedBw.currentDate }}</p>
+          <a href="#" class="btn" onClick="deleteWeight({{ recordedBw.id  }})"
+            >Delete</a
+          >
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+</main>
+{% endblock %}
