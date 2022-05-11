@@ -42,6 +42,9 @@
       src="https://kit.fontawesome.com/d781852125.js"
       crossorigin="anonymous"
     ></script>
+
+    <!-- Chart JS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
   <body>
     <nav class="nav">
@@ -51,12 +54,21 @@
         </h1>
       </a>
 
+      {% if currentUser.is_authenticated %}
+      <div class="nav__account">
+        <a href="/auth/account" class="nav__btn">{{ currentUser.username }}</a>
+        <hr />
+        <a href="/auth/logout" class="nav__btn">Logout</a>
+      </div>
+      {% else %}
       <div class="nav__account">
         <a href="/auth/login" class="nav__btn">Login</a>
         <hr />
         <a href="/auth/signup" class="nav__btn">Signup</a>
       </div>
+      {% endif %}
     </nav>
+
     {% with messages = get_flashed_messages(with_categories=true) %} {% if
     messages %} {% for category, message in messages %} {% if category ==
     'error' %}
