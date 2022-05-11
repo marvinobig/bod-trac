@@ -1,20 +1,23 @@
+from pickle import FALSE
 import sqlite3
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from os import path
+from flask_login import LoginManager, login_manager, current_user
 
 db = SQLAlchemy()
 DB_NAME = 'bod-trac.db'
 
 
 def page_not_found(e):
-    return render_template('error.html'), 404
+    return render_template('error.html', currentUser=current_user), 404
 
 
 def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'dtfbawlowg'
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.init_app(app)
 
     from .views import views
@@ -27,6 +30,14 @@ def create_app():
     from .models import User, BodyWeight
 
     create_database(app)
+
+    login_manager = LoginManager()
+    login_manager.login_view = 'auth.login'
+    login_manager.init_app(app)
+
+    @login_manager.user_loader
+    def load_user(id):
+        return User.query.get(int(id))
 
     return app
     
