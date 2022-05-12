@@ -60,6 +60,54 @@
     background-color: var(--success-bg-color);
 }
 
+.home {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    justify-content: space-evenly;
+    min-height: calc(100vh - 76px);
+}
+
+.home__welcome {
+    text-align: center;
+}
+
+.home__cardContainer {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 20px;
+    width: 100%;
+}
+
+.home__cardContainer__card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 200px;
+    border: 2px solid var(--border-color);
+    border-radius: 4px;
+}
+
+.home__cardContainer__card img {
+    aspect-ratio: 1;
+    width: 100%;
+    border-radius: 4px 4px 0 0;
+}
+
+.home__cardContainer__card__text {
+    text-align: center;
+    padding: 20px;
+}
+
+@media only screen and (max-width: 768px) {
+    .home__cardContainer {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
 .content {
     display: flex;
     flex-direction: column;
