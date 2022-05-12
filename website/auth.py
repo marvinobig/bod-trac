@@ -26,7 +26,15 @@ def login():
             if check_password_hash(getUser.password, password):
                 flash(f'Welcome {getUser.username}!', category='success')
                 login_user(getUser, remember=True)
-                return render_template('account.html', currentUser = current_user)
+
+                label = []
+                weight = []
+
+                for recordedBw in current_user.recordedBws:
+                    label.append(json.dumps(recordedBw.currentDate.strftime('%d %b')))
+                    weight.append(json.dumps(float(recordedBw.bW)))
+                    
+                return render_template('account.html', currentUser = current_user, label=label, weight=weight)
             else:
                 flash('Incorrect email or password', category='error')
                 return render_template('login.html')
@@ -38,12 +46,15 @@ def login():
 @auth.route('/account')
 @login_required
 def account_page():
-    label = [recordedBw.currentDate for recordedBw in current_user.recordedBws]
-    weight = [recordedBw.bW for recordedBw in current_user.recordedBws]
-    formattedDates = json.dumps(label, default=str)
-    print(label)
-    formattedWeight = json.dumps(weight, default=float)
-    return render_template('account.html', currentUser = current_user, label=formattedDates, weight=formattedWeight)
+    label = []
+    weight = []
+
+    for recordedBw in current_user.recordedBws:
+        label.append(json.dumps(recordedBw.currentDate.strftime('%d %b')))
+        weight.append(json.dumps(float(recordedBw.bW)))
+
+    print(label, weight)
+    return render_template('account.html', currentUser = current_user, label=label, weight=weight)
 
 
 @auth.route('/signup', methods=['GET', 'POST'])

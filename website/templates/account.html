@@ -28,6 +28,9 @@ endblock %} {% block content %}
         const labels = {{ label | safe }};
         const bodyweights = {{ weight | safe }};
 
+        console.log(labels);
+        console.log(bodyweights);
+
         const data = {
           labels: labels,
           datasets: [
@@ -48,10 +51,17 @@ endblock %} {% block content %}
           data: data,
           options: {
             scales: {
+              x: {
+                grid: {display:false},
+                ticks: {
+                  display: false
+                }
+              },
               y: {
-                beginAtZero: true
-              }
-            }
+                beginAtZero: true,
+                grid:{display:false}
+              },
+            },
           },
         };
 
@@ -69,7 +79,7 @@ endblock %} {% block content %}
         {% for recordedBw in currentUser.recordedBws %}
         <div class="account__display__entries__bwListCardContainer__card">
           <p>{{ recordedBw.bW | round(method='ceil') }} KG</p>
-          <p>{{ recordedBw.currentDate }}</p>
+          <p>{{ recordedBw.currentDate.strftime('%d %b, %Y') }}</p>
           <a href="#" class="btn" onClick="deleteWeight({{ recordedBw.id  }})"
             >Delete</a
           >

@@ -20,8 +20,16 @@ def add_weight():
         newBodyweight = BodyWeight(bW=currentWeight, user_id=current_user.id)
         db.session.add(newBodyweight)
         db.session.commit()
+
+        label = []
+        weight = []
+
+        for recordedBw in current_user.recordedBws:
+            label.append(json.dumps(recordedBw.currentDate.strftime('%d %b')))
+            weight.append(json.dumps(float(recordedBw.bW)))
+
         flash('Weight updated', category='success')
-        return render_template('account.html', currentUser=current_user)
+        return render_template('account.html', currentUser=current_user, label=label, weight=weight)
     else:
         flash('No weight entered', category='error')
         return render_template('account.html', currentUser=current_user)
