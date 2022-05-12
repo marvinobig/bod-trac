@@ -1,11 +1,39 @@
 {% extends 'base.html' %} {% block title %}Home{% endblock %} {% block content
 %}
-<main class="content">
-  <header class="content__welcome">
-    <p>
-      Track your body weight & BMI across time so you can keep track of your
-      progress.
-    </p>
+<main class="content home">
+  <header class="home__welcome">
+    <h2>
+      Track your bodyweight across time so you can keep track of your progress.
+    </h2>
   </header>
+  <section class="home__cardContainer">
+    <div class="home__cardContainer__card">
+      <img
+        src="{{ url_for('static', filename='images/account.jpg') }}"
+        alt="create your account"
+      />
+      <div class="home__cardContainer__card__text">
+        <p>Signup and manange your account on any device.</p>
+      </div>
+    </div>
+    <div class="home__cardContainer__card">
+      <img
+        src="{{ url_for('static', filename='images/track.jpg') }}"
+        alt="record your current weight"
+      />
+      <div class="home__cardContainer__card__text">
+        <p>Record and track your weight across time.</p>
+      </div>
+    </div>
+    <div class="home__cardContainer__card">
+      <img
+        src="{{ url_for('static', filename='images/visualize.jpg') }}"
+        alt="watch as your data is visualised for you to make sense off easily"
+      />
+      <div class="home__cardContainer__card__text">
+        <p>Watch as your weight data is visualized.</p>
+      </div>
+    </div>
+  </section>
 </main>
 {% endblock %}
