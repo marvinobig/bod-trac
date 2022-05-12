@@ -37,10 +37,10 @@ def login():
                 return render_template('account.html', currentUser = current_user, label=label, weight=weight)
             else:
                 flash('Incorrect email or password', category='error')
-                return render_template('login.html')
+                return render_template('login.html', currentUser = current_user)
         else:
             flash('No account with those details exists', category='error')
-            return render_template('login.html')
+            return render_template('login.html', currentUser = current_user)
     
 
 @auth.route('/account')
@@ -75,19 +75,19 @@ def signup():
         try:
             if getUser and getUser.password:
                 flash('You\'ve already got an account', category='error')
-                return render_template('signup.html')
+                return render_template('signup.html', currentUser = current_user)
             elif len(username) < 4:
                 flash('Username is too short, must be greater than 4 letters', category='error')
-                return render_template('signup.html')
+                return render_template('signup.html', currentUser = current_user)
             elif len(email) < 4:
                 flash('Email is too short, must be greater than 4 letters', category='error')
-                return render_template('signup.html')
+                return render_template('signup.html', currentUser = current_user)
             elif password != passwordConfirm:
                 flash('Password does not match', category='error')
-                return render_template('signup.html')
+                return render_template('signup.html', currentUser = current_user)
             elif len(password) < 8:
                 flash('Password is too short, must be longer than 8 characters', category='error')
-                return render_template('signup.html')
+                return render_template('signup.html', currentUser = current_user)
             else:
                 newUser = User(username=username, email=email, password=generate_password_hash(password, method='sha256'), startingBw=startingBw)
                 db.session.add(newUser)
@@ -96,11 +96,40 @@ def signup():
                 return redirect(url_for('auth.login'))
         except IntegrityError:
             flash('Email already exists, use another one', category='error')
-            return render_template('signup.html')
+            return render_template('signup.html', currentUser = current_user)
 
 
 @auth.route('/logout')
 @login_required
 def logout():
     logout_user()
+    flash("You\'ve been logged out", category='success')
     return redirect(url_for('auth.login'))
+
+
+@auth.route('/deleteAccount', methods=['GET', 'POST'])
+@login_required
+def delete_account():
+    if request.method == 'GET':
+        return render_template('delete.html', currentUser = current_user)
+    else:
+        password = request.form.get('password')
+
+        if check_password_hash(current_user.password, password):
+            deleteUser = User.query.filter(User.id == current_user.id).one()
+            userData = BodyWeight.query.filter(BodyWeight.user_id == current_user.id).all()
+
+            if userData:
+                for data in userData:
+                    db.session.delete(data)
+                    db.session.commit()
+                
+            
+            flash(f'The account belonging to {current_user.username} has been deleted', category='success')
+            db.session.delete(deleteUser)
+            db.session.commit()
+            logout_user()
+            return render_template('home.html', currentUser = current_user)
+        else:
+            flash('Incorrect password', category='error')
+            return render_template('delete.html', currentUser = current_user)
