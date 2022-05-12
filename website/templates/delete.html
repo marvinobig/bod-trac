@@ -1,0 +1,29 @@
+{% extends "base.html" %} {% block title %} Delete {% endblock %} {% block
+content %}
+<main class="content">
+  <h2>
+    The action you are about to take will result in the deletion of {{
+    currentUser.username }}'s account and all its associated data.
+  </h2>
+  <br />
+  <br />
+  <form class="content__form" method="post">
+    <fieldset>
+      <legend class="content__form__title">
+        Enter password for {{ currentUser.username }} to proceed
+      </legend>
+
+      <section>
+        <label for="password">Password</label>
+        <input
+          type="password"
+          name="password"
+          id="password"
+          placeholder="Enter password"
+        />
+      </section>
+      <button type="submit" class="btn">Delete Account</button>
+    </fieldset>
+  </form>
+</main>
+{% endblock %}
