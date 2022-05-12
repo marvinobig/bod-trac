@@ -53,7 +53,6 @@ def account_page():
         label.append(json.dumps(recordedBw.currentDate.strftime('%d %b')))
         weight.append(json.dumps(float(recordedBw.bW)))
 
-    print(label, weight)
     return render_template('account.html', currentUser = current_user, label=label, weight=weight)
 
 
