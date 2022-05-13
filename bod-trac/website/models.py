@@ -1,5 +1,4 @@
 from datetime import timezone
-from pickle import TRUE
 from . import db
 from flask_login import UserMixin 
 from sqlalchemy.sql import func
