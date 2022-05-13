@@ -1,4 +1,3 @@
-from crypt import methods
 from flask import Blueprint, render_template, request, flash, jsonify
 from flask_login import current_user
 from .models import BodyWeight, User
@@ -31,8 +30,15 @@ def add_weight():
         flash('Weight updated', category='success')
         return render_template('account.html', currentUser=current_user, label=label, weight=weight)
     else:
+        label = []
+        weight = []
+
+        for recordedBw in current_user.recordedBws:
+            label.append(json.dumps(recordedBw.currentDate.strftime('%d %b')))
+            weight.append(json.dumps(float(recordedBw.bW)))
+
         flash('No weight entered', category='error')
-        return render_template('account.html', currentUser=current_user)
+        return render_template('account.html', currentUser=current_user, label=label, weight=weight)
 
 
 @views.route('/deleteWeight', methods=['POST'])
@@ -55,6 +61,14 @@ def update_starting_weight():
         currentStartingBw = User.query.filter(User.id == current_user.id).one()
         currentStartingBw.startingBw = newstartingBw
         db.session.commit()
+
+    label = []
+    weight = []
+
+    for recordedBw in current_user.recordedBws:
+        label.append(json.dumps(recordedBw.currentDate.strftime('%d %b')))
+        weight.append(json.dumps(float(recordedBw.bW)))
+        
     flash('Updated starting bodyweight', category='success')
-    return render_template('account.html', currentUser=current_user)
+    return render_template('account.html', currentUser=current_user, label=label, weight=weight)
     

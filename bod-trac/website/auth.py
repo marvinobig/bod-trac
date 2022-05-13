@@ -13,7 +13,14 @@ auth = Blueprint('auth', __name__)
 def login():
     if request.method == 'GET':
         if current_user.is_authenticated:
-            return render_template('account.html', currentUser = current_user)
+            label = []
+            weight = []
+
+            for recordedBw in current_user.recordedBws:
+                label.append(json.dumps(recordedBw.currentDate.strftime('%d %b')))
+                weight.append(json.dumps(float(recordedBw.bW)))
+
+            return render_template('account.html', currentUser = current_user, label=label, weight=weight)
         else:
             return render_template('login.html', currentUser = current_user)
     else:
@@ -60,7 +67,14 @@ def account_page():
 def signup():
     if request.method == 'GET':
         if current_user.is_authenticated:
-            return render_template('account.html', currentUser = current_user)
+            label = []
+            weight = []
+
+            for recordedBw in current_user.recordedBws:
+                label.append(json.dumps(recordedBw.currentDate.strftime('%d %b')))
+                weight.append(json.dumps(float(recordedBw.bW)))
+
+            return render_template('account.html', currentUser = current_user, label=label, weight=weight)
         else:
             return render_template('signup.html', currentUser = current_user)
     else:
