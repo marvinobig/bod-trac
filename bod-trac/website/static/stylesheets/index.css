@@ -9,6 +9,7 @@
     --btn-bg-color: #272727;
     --error-bg-color: #ff000076;
     --success-bg-color: #80cb1770;
+    --transition: all 0.2s;
 }
 
 .btn {
@@ -88,6 +89,12 @@
     max-width: 200px;
     border: 2px solid var(--border-color);
     border-radius: 4px;
+    transition: var(--transition);
+}
+
+.home__cardContainer__card:hover {
+    transition: var(--transition);
+    box-shadow: 5px 5px 10px var(--border-color);
 }
 
 .home__cardContainer__card img {
