@@ -1,1 +1,1 @@
-web: gunicorn
+web: gunicorn --chdir bod-trac main:app

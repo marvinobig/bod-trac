@@ -2,7 +2,7 @@ import sqlite3
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from os import path
-from flask_login import LoginManager, login_manager, current_user
+from flask_login import LoginManager, current_user
 
 db = SQLAlchemy()
 DB_NAME = 'bod-trac.db'
@@ -26,7 +26,7 @@ def create_app():
     app.register_blueprint(auth, url_prefix='/auth')
     app.register_error_handler(404, page_not_found)
     
-    from .models import User, BodyWeight
+    from .models import User
 
     create_database(app)
 
